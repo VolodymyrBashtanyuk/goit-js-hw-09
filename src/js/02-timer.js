@@ -22,6 +22,7 @@ flatpickr(data, options);
 
 let timer = 0;
 let intervalId = null;
+
 function onClose(selectedDates) {
         if (selectedDates[0] < options.defaultDate) {
             Notify.failure('Please choose a date in the future',
@@ -31,35 +32,23 @@ function onClose(selectedDates) {
         } else if (selectedDates[0] > options.defaultDate) {
             startButton.disabled = false;
             timer = selectedDates[0];
-            
         };
 };
-function startInterval(date) {
+function timeInterval(date) {
     intervalId = setInterval(() => {
         const currentTime = Date.now();
         const countdownTime  = date - currentTime;
         const time = convertMs(countdownTime);
         updateBodyTime(time);
-    console.log(countdownTime);
-    console.log(currentTime.getSeconds());
-    // console.log(date.getSeconds());
-        if (countdownTime <= 0) {
+
+        if (Math.floor(countdownTime / 1000) === 0) {
             clearInterval(intervalId);
         }
-        
-
-        // if (currentTime >= time) {
-        //     clearInterval(intervalId);
-        // }
     }, 1000); 
 };
-function endInterval() {
-    // console.log(intervalId);
-}
 function onStartButton() {
     startButton.disabled = true;
-    startInterval(timer); 
-    endInterval();
+    timeInterval(timer); 
 };
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
@@ -82,7 +71,7 @@ function updateBodyTime({days, hours, minutes, seconds }) {
     valueTime[0].textContent = days; 
     valueTime[1].textContent = hours; 
     valueTime[2].textContent = minutes; 
-    valueTime[3].textContent = seconds; 
+    valueTime[3].textContent = seconds;      
 }
 
 
