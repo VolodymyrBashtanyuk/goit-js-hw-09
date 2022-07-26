@@ -67,11 +67,11 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 };
 
-function updateBodyTime({days, hours, minutes, seconds }) {
+function updateBodyTime({ days, hours, minutes, seconds }) {
     valueTime[0].textContent = days; 
     valueTime[1].textContent = hours; 
     valueTime[2].textContent = minutes; 
-    valueTime[3].textContent = seconds;      
-}
+    valueTime[3].textContent = seconds;   
+};
 
 
