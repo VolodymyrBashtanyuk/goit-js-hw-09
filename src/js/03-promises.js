@@ -3,31 +3,26 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 
 const promiseForm = document.querySelector('.form');
+const inputfirstDelay = document.querySelector('[name = "delay"]');
+const inputStepDelay = document.querySelector('[name = "step"]');
+const inputAmount = document.querySelector('[name = "amount"]');
 
-promiseForm.addEventListener('input', onFormInput);
 promiseForm.addEventListener('submit', onFormSubmit);
-
-let inputValue = {};
 
 function onFormSubmit(event) {
   event.preventDefault();
 
-  let delay = Number(inputValue.delay);
-  const stepDelay = Number(inputValue.step);
-  const amount = Number(inputValue.amount);
+  let delay = Number(inputfirstDelay.value);
+  const stepDelay = Number(inputStepDelay.value);
+  const amount = Number(inputAmount.value);
 
   for (let i = 1; i <= amount; i += 1) {
     createPromise(i, delay )
-      .then(({ i, delay }) => Notify.success(`Fulfilled promise ${i} in ${delay}ms`))
-      .catch(({ i, delay }) => Notify.failure(`Rejected promise ${i} in ${delay}ms`))
+      .then(({ position, delay }) => Notify.success(`Fulfilled promise ${position} in ${delay}ms`))
+      .catch(({ position, delay }) => Notify.failure(`Rejected promise ${position} in ${delay}ms`))
     delay  += stepDelay;
   }
 };
-
-function onFormInput(event) {
-  const  {name, value} = event.target;
-  inputValue[name] = value;
-}
 
 function createPromise(position, delay) {
   return new Promise((resolve, reject) => {
